@@ -1,0 +1,19 @@
+{
+  "name": "appium-mobile-tests",
+  "version": "1.0.0",
+  "description": "Appium E2E Mobile Test Suite for Gingivitis Detector App",
+  "private": true,
+  "main": "run_all_tests.js",
+  "scripts": {
+    "test": "mocha \"tests/comprehensive.test.js\" --require ./tests/global_hooks.js --timeout 180000",
+    "report": "node generate_report.js",
+    "test:all": "node run_all_tests.js"
+  },
+  "devDependencies": {
+    "webdriverio": "^8.22.0",
+    "appium": "^2.0.0",
+    "mocha": "^10.2.0",
+    "chai": "^4.3.7",
+    "exceljs": "^4.3.0"
+  }
+}

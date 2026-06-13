@@ -1,0 +1,350 @@
+[
+  {
+    "title": "TC-001: Navigate to login page",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-002: Verify login page elements are displayed",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-003: Successful login with valid credentials",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-004: Login with empty email field",
+    "state": "failed",
+    "error": "stale element reference: stale element not found in the current frame\n  (Session info: chrome=149.0.7827.102)"
+  },
+  {
+    "title": "TC-005: Login with empty password field",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-006: Login with both fields empty",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-007: Login with invalid email format",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-008: Login with non-existent user",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-009: Login with wrong password",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-010: Login with very long email",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-011: Login with SQL injection attempt",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-012: Login with XSS attempt",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-013: Login with special characters",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-014: Multiple rapid login attempts",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-015: Verify password field is masked",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-016: Verify email field type",
+    "state": "failed",
+    "error": "expected 'text' to equal 'email'"
+  },
+  {
+    "title": "TC-017: Login button is enabled",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-018: Navigate to register from login",
+    "state": "failed",
+    "error": "expected 'http://localhost:3000/Register' to include 'register'"
+  },
+  {
+    "title": "TC-019: Navigate to forgot password",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-020: Page title and header visibility",
+    "state": "failed",
+    "error": "expected '' not to be empty"
+  },
+  {
+    "title": "TC-021: Navigate to registration page",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-022: Verify registration form elements",
+    "state": "failed",
+    "error": "expected false to be true"
+  },
+  {
+    "title": "TC-023: Register with valid credentials",
+    "state": "failed",
+    "error": "element not interactable\n  (Session info: chrome=149.0.7827.102)"
+  },
+  {
+    "title": "TC-024: Register with empty username",
+    "state": "failed",
+    "error": "element not interactable\n  (Session info: chrome=149.0.7827.102)"
+  },
+  {
+    "title": "TC-025: Register with empty email",
+    "state": "failed",
+    "error": "element not interactable\n  (Session info: chrome=149.0.7827.102)"
+  },
+  {
+    "title": "TC-026: Register with empty password",
+    "state": "failed",
+    "error": "element not interactable\n  (Session info: chrome=149.0.7827.102)"
+  },
+  {
+    "title": "TC-027: Register with invalid email format",
+    "state": "failed",
+    "error": "element not interactable\n  (Session info: chrome=149.0.7827.102)"
+  },
+  {
+    "title": "TC-028: Register with weak password",
+    "state": "failed",
+    "error": "element not interactable\n  (Session info: chrome=149.0.7827.102)"
+  },
+  {
+    "title": "TC-029: Register with very long username",
+    "state": "failed",
+    "error": "element not interactable\n  (Session info: chrome=149.0.7827.102)"
+  },
+  {
+    "title": "TC-030: Register with XSS in username",
+    "state": "failed",
+    "error": "element not interactable\n  (Session info: chrome=149.0.7827.102)"
+  },
+  {
+    "title": "TC-031: Register with duplicate email",
+    "state": "failed",
+    "error": "element not interactable\n  (Session info: chrome=149.0.7827.102)"
+  },
+  {
+    "title": "TC-032: Register with special characters in email",
+    "state": "failed",
+    "error": "element not interactable\n  (Session info: chrome=149.0.7827.102)"
+  },
+  {
+    "title": "TC-033: Register button disabled during submission",
+    "state": "failed",
+    "error": "element not interactable\n  (Session info: chrome=149.0.7827.102)"
+  },
+  {
+    "title": "TC-034: Navigate back to login from register",
+    "state": "failed",
+    "error": "element not interactable\n  (Session info: chrome=149.0.7827.102)"
+  },
+  {
+    "title": "TC-035: Register page displays title",
+    "state": "failed",
+    "error": "no such element: Unable to locate element: {\"method\":\"css selector\",\"selector\":\"h1, h2\"}\n  (Session info: chrome=149.0.7827.102)"
+  },
+  {
+    "title": "TC-036: Register with unicode characters",
+    "state": "failed",
+    "error": "element not interactable\n  (Session info: chrome=149.0.7827.102)"
+  },
+  {
+    "title": "TC-037: Register SQL injection attempt",
+    "state": "failed",
+    "error": "element not interactable\n  (Session info: chrome=149.0.7827.102)"
+  },
+  {
+    "title": "TC-038: Register with spaces in password",
+    "state": "failed",
+    "error": "element not interactable\n  (Session info: chrome=149.0.7827.102)"
+  },
+  {
+    "title": "TC-039: Verify email field keyboard type",
+    "state": "failed",
+    "error": "expected 'text' to equal 'email'"
+  },
+  {
+    "title": "TC-040: Verify password field is secure",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-041: OTP screen appears after registration",
+    "error": null
+  },
+  {
+    "title": "TC-061: Navigate to forgot password",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-062: Send OTP for password reset",
+    "state": "failed",
+    "error": "element not interactable\n  (Session info: chrome=149.0.7827.102)"
+  },
+  {
+    "title": "TC-063: Invalid email format on forgot",
+    "state": "failed",
+    "error": "element not interactable\n  (Session info: chrome=149.0.7827.102)"
+  },
+  {
+    "title": "TC-064: Send OTP with empty email field",
+    "state": "failed",
+    "error": "element not interactable\n  (Session info: chrome=149.0.7827.102)"
+  },
+  {
+    "title": "TC-065: Forgot password email field input sanitization",
+    "state": "failed",
+    "error": "element not interactable\n  (Session info: chrome=149.0.7827.102)"
+  },
+  {
+    "title": "TC-066: Forgot password screen displays instructions text",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-067: Forgot password verify button state changes on click",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-068: Reset password screen elements are displayed",
+    "error": null
+  },
+  {
+    "title": "TC-081: Navigate to dashboard",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-082: Dashboard page loads",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-083: Select image button exists",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-084: Analyze button exists",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-085: Logout button exists",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-086: Click logout",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-087: Image display container visibility before file upload",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-088: Page responsiveness check",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-089: App title presence",
+    "state": "failed",
+    "error": "expected '' not to be empty"
+  },
+  {
+    "title": "TC-090: Navigation flow login to register",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-091: Navigation flow register to login",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-092: Page load time acceptable",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-093: Network error handling",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-094: Session timeout handling",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-095: Form auto-fill support",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-096: Browser back button behavior",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-097: Browser forward button behavior",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-098: Page refresh maintains state",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "TC-099: Console errors check",
+    "state": "failed",
+    "error": "expected [ Entry{ …(4) }, Entry{ …(4) }, …(11) ] to have a length of +0 but got 13"
+  },
+  {
+    "title": "TC-100: Final smoke test - app is responsive",
+    "state": "passed",
+    "error": null
+  },
+  {
+    "title": "logs in with test credentials",
+    "state": "failed",
+    "error": "stale element reference: stale element not found in the current frame\n  (Session info: chrome=149.0.7827.102)"
+  }
+]

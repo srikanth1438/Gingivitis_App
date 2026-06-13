@@ -1,0 +1,102 @@
+[
+  {
+    "endpoint": "/",
+    "method": "GET",
+    "test": "No Authentication Bypass",
+    "expected_status": "NOT 401",
+    "actual_status": 200,
+    "finding": false,
+    "severity": "PASS",
+    "response_time_ms": 2072,
+    "timestamp": "2026-06-11T13:28:57.274680",
+    "note": "\u2713 Correct - no 401 - returned 200"
+  },
+  {
+    "endpoint": "/register",
+    "method": "POST",
+    "test": "No Authentication Bypass",
+    "expected_status": "NOT 401",
+    "actual_status": 400,
+    "finding": false,
+    "severity": "PASS",
+    "response_time_ms": 2047,
+    "timestamp": "2026-06-11T13:28:59.326589",
+    "note": "\u2713 Correct - no 401 - returned 400"
+  },
+  {
+    "endpoint": "/login",
+    "method": "POST",
+    "test": "No Authentication Bypass",
+    "expected_status": "NOT 401",
+    "actual_status": 400,
+    "finding": false,
+    "severity": "PASS",
+    "response_time_ms": 2582,
+    "timestamp": "2026-06-11T13:29:01.910900",
+    "note": "\u2713 Correct - no 401 - returned 400"
+  },
+  {
+    "endpoint": "/send-otp",
+    "method": "POST",
+    "test": "No Authentication Bypass",
+    "expected_status": "NOT 401",
+    "actual_status": 400,
+    "finding": false,
+    "severity": "PASS",
+    "response_time_ms": 2028,
+    "timestamp": "2026-06-11T13:29:03.942591",
+    "note": "\u2713 Correct - no 401 - returned 400"
+  },
+  {
+    "endpoint": "/detect",
+    "method": "POST",
+    "test": "Protected Endpoint Auth Enforcement",
+    "case": "No Auth Header",
+    "expected_status": "401 or 403",
+    "actual_status": 401,
+    "finding": false,
+    "severity": "PASS",
+    "response_time_ms": 2025,
+    "timestamp": "2026-06-11T13:29:05.976494",
+    "note": "No Auth Header returned 401"
+  },
+  {
+    "endpoint": "/detect",
+    "method": "POST",
+    "test": "Protected Endpoint Auth Enforcement",
+    "case": "Invalid Token Format",
+    "expected_status": "401 or 403",
+    "actual_status": 401,
+    "finding": false,
+    "severity": "PASS",
+    "response_time_ms": 2067,
+    "timestamp": "2026-06-11T13:29:08.049115",
+    "note": "Invalid Token Format returned 401"
+  },
+  {
+    "endpoint": "/detect",
+    "method": "POST",
+    "test": "Protected Endpoint Auth Enforcement",
+    "case": "Malformed Bearer",
+    "expected_status": "401 or 403",
+    "actual_status": 401,
+    "finding": false,
+    "severity": "PASS",
+    "response_time_ms": 2031,
+    "timestamp": "2026-06-11T13:29:10.085148",
+    "note": "Malformed Bearer returned 401"
+  },
+  {
+    "endpoint": "/detect",
+    "method": "POST",
+    "test": "Protected Endpoint Auth Enforcement",
+    "case": "Empty Bearer",
+    "expected_status": "401 or 403",
+    "actual_status": 401,
+    "finding": false,
+    "severity": "PASS",
+    "response_time_ms": 2037,
+    "timestamp": "2026-06-11T13:29:12.128496",
+    "note": "Empty Bearer returned 401"
+  }
+]

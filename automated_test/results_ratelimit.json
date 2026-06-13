@@ -1,0 +1,18 @@
+[
+  {
+    "endpoint": "/login",
+    "method": "POST",
+    "test": "Rate Limiting",
+    "requests_sent": 50,
+    "total_time_seconds": 102.73905611038208,
+    "status_distribution": {
+      "400": 10,
+      "429": 40
+    },
+    "rate_limit_detected": true,
+    "finding": false,
+    "severity": "PASS",
+    "timestamp": "2026-06-11T13:32:04.045387",
+    "note": "Rate limiting is enforced (good)"
+  }
+]

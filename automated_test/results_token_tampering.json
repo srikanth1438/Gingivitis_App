@@ -1,0 +1,13 @@
+[
+  {
+    "endpoint": "/detect",
+    "method": "POST",
+    "test": "Token Tampering",
+    "tampered_token_status": 401,
+    "expected_status": "401 or 403",
+    "finding": false,
+    "severity": "PASS",
+    "timestamp": "2026-06-11T13:32:15.433404",
+    "note": "Tampered JWT should be rejected - got 401"
+  }
+]

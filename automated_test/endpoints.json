@@ -1,0 +1,117 @@
+{
+  "total": 8,
+  "endpoints": [
+    {
+      "path": "/",
+      "method": "GET",
+      "requires_auth": false,
+      "description": "Home/status endpoint",
+      "expected_status": 200,
+      "expected_when_public": 200,
+      "test_categories": [
+        "authentication_bypass",
+        "injection_detection",
+        "rate_limiting",
+        "response_validation"
+      ]
+    },
+    {
+      "path": "/register",
+      "method": "POST",
+      "requires_auth": false,
+      "description": "User registration - returns JWT token",
+      "expected_status": 200,
+      "expected_when_public": 200,
+      "test_categories": [
+        "authentication_bypass",
+        "injection_detection",
+        "rate_limiting",
+        "response_validation"
+      ]
+    },
+    {
+      "path": "/login",
+      "method": "POST",
+      "requires_auth": false,
+      "description": "User login - returns JWT token",
+      "expected_status": 200,
+      "expected_when_public": 200,
+      "test_categories": [
+        "authentication_bypass",
+        "injection_detection",
+        "rate_limiting",
+        "response_validation"
+      ]
+    },
+    {
+      "path": "/send-otp",
+      "method": "POST",
+      "requires_auth": false,
+      "description": "Send OTP for registration",
+      "expected_status": 200,
+      "expected_when_public": 200,
+      "test_categories": [
+        "authentication_bypass",
+        "injection_detection",
+        "rate_limiting",
+        "response_validation"
+      ]
+    },
+    {
+      "path": "/verify-otp",
+      "method": "POST",
+      "requires_auth": false,
+      "description": "Verify OTP and create account",
+      "expected_status": 200,
+      "expected_when_public": 200,
+      "test_categories": [
+        "authentication_bypass",
+        "injection_detection",
+        "rate_limiting",
+        "response_validation"
+      ]
+    },
+    {
+      "path": "/forgot-password",
+      "method": "POST",
+      "requires_auth": false,
+      "description": "Request password reset OTP",
+      "expected_status": 200,
+      "expected_when_public": 200,
+      "test_categories": [
+        "authentication_bypass",
+        "injection_detection",
+        "rate_limiting",
+        "response_validation"
+      ]
+    },
+    {
+      "path": "/reset-password",
+      "method": "POST",
+      "requires_auth": false,
+      "description": "Reset password with OTP",
+      "expected_status": 200,
+      "expected_when_public": 200,
+      "test_categories": [
+        "authentication_bypass",
+        "injection_detection",
+        "rate_limiting",
+        "response_validation"
+      ]
+    },
+    {
+      "path": "/detect",
+      "method": "POST",
+      "requires_auth": false,
+      "description": "Gingivitis detection (file upload)",
+      "expected_status": 200,
+      "expected_when_public": 200,
+      "test_categories": [
+        "authentication_bypass",
+        "injection_detection",
+        "rate_limiting",
+        "response_validation"
+      ]
+    }
+  ]
+}

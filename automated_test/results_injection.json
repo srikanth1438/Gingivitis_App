@@ -1,0 +1,486 @@
+[
+  {
+    "endpoint": "http://localhost:8000/register",
+    "method": "POST",
+    "parameter": "username",
+    "injection_type": "SQL UNION-based",
+    "status": 422,
+    "response_time_ms": 2100,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:29:16.095287",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/register",
+    "method": "POST",
+    "parameter": "username",
+    "injection_type": "SQL Time-based blind",
+    "status": 422,
+    "response_time_ms": 2083,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:29:18.178739",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/register",
+    "method": "POST",
+    "parameter": "username",
+    "injection_type": "NoSQL operator",
+    "status": 422,
+    "response_time_ms": 2053,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:29:20.231885",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/register",
+    "method": "POST",
+    "parameter": "username",
+    "injection_type": "Command injection",
+    "status": 422,
+    "response_time_ms": 2056,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:29:22.288878",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/register",
+    "method": "POST",
+    "parameter": "email",
+    "injection_type": "SQL UNION-based",
+    "status": 422,
+    "response_time_ms": 2047,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Error message leaked",
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:29:24.338249",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/register",
+    "method": "POST",
+    "parameter": "email",
+    "injection_type": "SQL Time-based blind",
+    "status": 422,
+    "response_time_ms": 2044,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:29:26.383158",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/register",
+    "method": "POST",
+    "parameter": "email",
+    "injection_type": "NoSQL operator",
+    "status": 422,
+    "response_time_ms": 2068,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:29:28.451984",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/register",
+    "method": "POST",
+    "parameter": "email",
+    "injection_type": "Command injection",
+    "status": 422,
+    "response_time_ms": 2029,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:29:30.481589",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/register",
+    "method": "POST",
+    "parameter": "password",
+    "injection_type": "SQL UNION-based",
+    "status": 422,
+    "response_time_ms": 2049,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:29:32.531404",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/register",
+    "method": "POST",
+    "parameter": "password",
+    "injection_type": "SQL Time-based blind",
+    "status": 422,
+    "response_time_ms": 2046,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:29:34.580298",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/register",
+    "method": "POST",
+    "parameter": "password",
+    "injection_type": "NoSQL operator",
+    "status": 422,
+    "response_time_ms": 2046,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:29:36.629106",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/register",
+    "method": "POST",
+    "parameter": "password",
+    "injection_type": "Command injection",
+    "status": 422,
+    "response_time_ms": 2030,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:29:38.659206",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/login",
+    "method": "POST",
+    "parameter": "username",
+    "injection_type": "SQL UNION-based",
+    "status": 422,
+    "response_time_ms": 2046,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:29:40.705225",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/login",
+    "method": "POST",
+    "parameter": "username",
+    "injection_type": "SQL Time-based blind",
+    "status": 422,
+    "response_time_ms": 2065,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:29:42.770416",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/login",
+    "method": "POST",
+    "parameter": "username",
+    "injection_type": "NoSQL operator",
+    "status": 422,
+    "response_time_ms": 2027,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:29:44.801506",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/login",
+    "method": "POST",
+    "parameter": "username",
+    "injection_type": "Command injection",
+    "status": 422,
+    "response_time_ms": 2050,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:29:46.851809",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/login",
+    "method": "POST",
+    "parameter": "password",
+    "injection_type": "SQL UNION-based",
+    "status": 422,
+    "response_time_ms": 2032,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:29:48.884667",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/login",
+    "method": "POST",
+    "parameter": "password",
+    "injection_type": "SQL Time-based blind",
+    "status": 422,
+    "response_time_ms": 2033,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:29:50.918532",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/login",
+    "method": "POST",
+    "parameter": "password",
+    "injection_type": "NoSQL operator",
+    "status": 422,
+    "response_time_ms": 2033,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:29:52.951645",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/login",
+    "method": "POST",
+    "parameter": "password",
+    "injection_type": "Command injection",
+    "status": 422,
+    "response_time_ms": 2059,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:29:55.010910",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/send-otp",
+    "method": "POST",
+    "parameter": "email",
+    "injection_type": "SQL UNION-based",
+    "status": 422,
+    "response_time_ms": 2047,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Error message leaked",
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:29:57.060292",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/send-otp",
+    "method": "POST",
+    "parameter": "email",
+    "injection_type": "SQL Time-based blind",
+    "status": 422,
+    "response_time_ms": 2046,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:29:59.106770",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/send-otp",
+    "method": "POST",
+    "parameter": "email",
+    "injection_type": "NoSQL operator",
+    "status": 422,
+    "response_time_ms": 2036,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:30:01.143018",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/send-otp",
+    "method": "POST",
+    "parameter": "email",
+    "injection_type": "Command injection",
+    "status": 422,
+    "response_time_ms": 2063,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:30:03.206522",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/send-otp",
+    "method": "POST",
+    "parameter": "username",
+    "injection_type": "SQL UNION-based",
+    "status": 422,
+    "response_time_ms": 2047,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:30:05.254480",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/send-otp",
+    "method": "POST",
+    "parameter": "username",
+    "injection_type": "SQL Time-based blind",
+    "status": 422,
+    "response_time_ms": 2050,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:30:07.304757",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/send-otp",
+    "method": "POST",
+    "parameter": "username",
+    "injection_type": "NoSQL operator",
+    "status": 422,
+    "response_time_ms": 2045,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:30:09.349874",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/send-otp",
+    "method": "POST",
+    "parameter": "username",
+    "injection_type": "Command injection",
+    "status": 422,
+    "response_time_ms": 2035,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:30:11.385550",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/forgot-password",
+    "method": "POST",
+    "parameter": "email",
+    "injection_type": "SQL UNION-based",
+    "status": 422,
+    "response_time_ms": 2060,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Error message leaked",
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:30:13.446157",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/forgot-password",
+    "method": "POST",
+    "parameter": "email",
+    "injection_type": "SQL Time-based blind",
+    "status": 422,
+    "response_time_ms": 2048,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:30:15.494514",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/forgot-password",
+    "method": "POST",
+    "parameter": "email",
+    "injection_type": "NoSQL operator",
+    "status": 422,
+    "response_time_ms": 2032,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Error message leaked",
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:30:17.526645",
+    "note": "Input validation rejected payload"
+  },
+  {
+    "endpoint": "http://localhost:8000/forgot-password",
+    "method": "POST",
+    "parameter": "email",
+    "injection_type": "Command injection",
+    "status": 422,
+    "response_time_ms": 2033,
+    "finding": false,
+    "severity": "PASS",
+    "anomalies": [
+      "Input validation rejected payload"
+    ],
+    "timestamp": "2026-06-11T13:30:19.560494",
+    "note": "Input validation rejected payload"
+  }
+]
