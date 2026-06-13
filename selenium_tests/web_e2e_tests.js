@@ -28,12 +28,12 @@ const chromedriver = require("chromedriver");
 // ─────────────────────────────────────────
 // CONFIG — change these to match your setup
 // ─────────────────────────────────────────
-const BASE_URL = "http://localhost:8081";   // Expo web URL
-const API_URL = "http://localhost:8000";   // FastAPI backend
+const BASE_URL = process.env.E2E_BASE_URL || "http://localhost:8081";   // Expo web URL
+const API_URL = process.env.E2E_API_URL || "http://localhost:8000";   // FastAPI backend
 const WAIT_MS = 8000;                      // element wait timeout
-const VALID_USER = "testuser123";
-const VALID_EMAIL = "testuser@example.com";
-const VALID_PASS = "Test@1234";
+const VALID_USER = process.env.E2E_VALID_USER || "test@test.com";
+const VALID_EMAIL = process.env.E2E_VALID_EMAIL || "test@test.com";
+const VALID_PASS = process.env.E2E_VALID_PASS || "password123";
 const WRONG_PASS = "WrongPass999";
 const WEAK_PASS = "123";
 const INVALID_EMAIL = "notanemail";
@@ -44,8 +44,13 @@ const INVALID_EMAIL = "notanemail";
 // ─────────────────────────────────────────
 async function buildDriver() {
   const opts = new chrome.Options();
-  opts.setChromeBinaryPath("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe");
+  if (process.env.CHROME_BINARY_PATH) {
+    opts.setChromeBinaryPath(process.env.CHROME_BINARY_PATH);
+  } else if (process.platform === "win32") {
+    opts.setChromeBinaryPath("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe");
+  }
   opts.addArguments(
+    "--headless=new",
     "--no-sandbox",
     "--disable-dev-shm-usage",
     "--disable-web-security",

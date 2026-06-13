@@ -1,0 +1,84 @@
+name: Selenium E2E
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  selenium-e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            mobile/package-lock.json
+            selenium_tests/package-lock.json
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install mobile dependencies
+        working-directory: mobile
+        run: npm install
+
+      - name: Install Selenium dependencies
+        working-directory: selenium_tests
+        run: npm ci
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: pip install -r requirements.txt
+
+      - name: Start backend
+        working-directory: backend
+        run: |
+          nohup python -m uvicorn main:app --host 127.0.0.1 --port 8000 > ../backend.log 2>&1 &
+          for i in {1..60}; do
+            curl --fail --silent http://127.0.0.1:8000/ && exit 0
+            sleep 2
+          done
+          cat ../backend.log
+          exit 1
+
+      - name: Start Expo web
+        working-directory: mobile
+        run: |
+          nohup npx expo start --web --port 8081 --non-interactive > ../expo.log 2>&1 &
+          for i in {1..60}; do
+            curl --fail --silent http://127.0.0.1:8081 && exit 0
+            sleep 2
+          done
+          cat ../expo.log
+          exit 1
+
+      - name: Run Selenium E2E tests
+        working-directory: selenium_tests
+        env:
+          E2E_BASE_URL: http://127.0.0.1:8081
+          E2E_API_URL: http://127.0.0.1:8000
+          E2E_VALID_USER: test@test.com
+          E2E_VALID_EMAIL: test@test.com
+          E2E_VALID_PASS: password123
+        run: npm test
+
+      - name: Upload service logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: selenium-e2e-logs
+          path: |
+            backend.log
+            expo.log
