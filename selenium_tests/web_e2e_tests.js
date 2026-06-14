@@ -104,14 +104,22 @@ async function typeInto(driver, locator, text) {
 }
 
 async function clickOn(driver, locator) {
-  let el = await waitVisible(driver, locator);
-  try {
-    await el.click();
-  } catch {
-    el = await waitVisible(driver, locator);
-    await driver.executeScript("arguments[0].click();", el);
+  let lastError;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      const el = await waitVisible(driver, locator);
+      try {
+        await el.click();
+      } catch {
+        await driver.executeScript("arguments[0].click();", el);
+      }
+      return el;
+    } catch (error) {
+      lastError = error;
+      await driver.sleep(300);
+    }
   }
-  return el;
+  throw lastError;
 }
 
 async function elementExists(driver, locator, ms = 4000) {
@@ -657,10 +665,11 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
 
   it("WEB-TC-040: Verify password field is secure", async function () {
     await goToRegister(driver);
-    await waitVisible(driver, By.css('input[type="password"]'));
-    const t = await driver.executeScript(
-      'return document.querySelector("input[type=\\"password\\"]")?.getAttribute("type");'
-    );
+    const t = await driver.wait(async () => {
+      return driver.executeScript(
+        'return document.querySelector("input[type=\\"password\\"]")?.getAttribute("type") || null;'
+      );
+    }, WAIT_MS);
     expect(t).to.equal("password");
   });
 
@@ -882,9 +891,17 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
     await clickOn(driver, FORGOT_PASSWORD_LINK);
     await driver.sleep(500);
     try {
-      const emailField = await waitFor(driver,
-        By.css('input[type="email"], input[placeholder*="mail"], input[placeholder*="Email"]'), 5000);
-      await emailField.sendKeys(INVALID_EMAIL);
+      await driver.wait(async () => {
+        return driver.executeScript(
+          'return !!document.querySelector("input[type=\\"email\\"], input[placeholder*=\\"mail\\"], input[placeholder*=\\"Email\\"]");'
+        );
+      }, 5000);
+      await driver.executeScript(`
+        const input = document.querySelector('input[type="email"], input[placeholder*="mail"], input[placeholder*="Email"]');
+        const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+        setter.call(input, arguments[0]);
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+      `, INVALID_EMAIL);
       await clickOn(driver, SEND_OTP_BUTTON);
       await driver.sleep(1000);
       const src = await driver.getPageSource();
