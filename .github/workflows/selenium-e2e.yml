@@ -32,7 +32,7 @@ jobs:
 
       - name: Install mobile dependencies
         working-directory: mobile
-        run: npm install
+        run: npm ci
 
       - name: Install Selenium dependencies
         working-directory: selenium_tests
@@ -44,6 +44,9 @@ jobs:
 
       - name: Start backend
         working-directory: backend
+        env:
+          SKIP_MODEL_LOAD: "true"
+          LOGIN_RATE_LIMIT: "1000/minute"
         run: |
           nohup python -m uvicorn main:app --host 127.0.0.1 --port 8000 > ../backend.log 2>&1 &
           for i in {1..60}; do

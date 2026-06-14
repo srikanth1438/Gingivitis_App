@@ -58,14 +58,18 @@ async function buildDriver() {
     "--disable-extensions",
     "--dns-prefetch-disable",
   );
-  const service = new chrome.ServiceBuilder(
-    require('chromedriver').path
-  );
-  const driver = await new Builder()
+  const builder = new Builder()
     .forBrowser("chrome")
-    .setChromeOptions(opts)
-    .setChromeService(service)
-    .build();
+    .setChromeOptions(opts);
+
+  if (!process.env.CI) {
+    const service = new chrome.ServiceBuilder(
+      require('chromedriver').path
+    );
+    builder.setChromeService(service);
+  }
+
+  const driver = await builder.build();
   await driver.manage().window().setRect({ width: 1280, height: 800 });
   await driver.manage().setTimeouts({ implicit: 3000, pageLoad: 15000 });
   return driver;

@@ -6,8 +6,10 @@ from pydantic import BaseModel, validator
 from ultralytics import YOLO
 from PIL import Image
 import io
+import os
 import uvicorn
 import re
+from pathlib import Path
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
@@ -22,6 +24,7 @@ app = FastAPI()
 
 # Rate Limiter
 limiter = Limiter(key_func=get_remote_address)
+LOGIN_RATE_LIMIT = os.getenv("LOGIN_RATE_LIMIT", "5/minute")
 app.state.limiter = limiter
 app.add_middleware(SlowAPIMiddleware)
 app.add_middleware(
@@ -31,7 +34,23 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-model = YOLO("best.pt")
+MODEL_PATH = Path(os.getenv("MODEL_PATH", Path(__file__).with_name("best.pt")))
+model = None
+
+
+def get_model():
+    global model
+    if model is not None:
+        return model
+
+    if os.getenv("SKIP_MODEL_LOAD", "").lower() in {"1", "true", "yes"}:
+        raise HTTPException(status_code=503, detail="Model loading is disabled")
+
+    if not MODEL_PATH.exists():
+        raise HTTPException(status_code=503, detail=f"Model file not found: {MODEL_PATH}")
+
+    model = YOLO(str(MODEL_PATH))
+    return model
 
 create_tables()
 
@@ -154,7 +173,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 
 
 @app.post("/login", response_model=Token)
-@limiter.limit("5/minute")
+@limiter.limit(LOGIN_RATE_LIMIT)
 def login(request: Request, user: UserLogin, db: Session = Depends(get_db)):
     """Login endpoint with rate limiting (5 attempts per minute)"""
     db_user = db.query(User).filter(User.username == user.username).first()
@@ -265,7 +284,9 @@ async def detect_gingivitis(file: UploadFile = File(...), current_user: str = De
 
     print("Image received! Analyzing...")
     try:
-        results = model(image, conf=0.5)
+        results = get_model()(image, conf=0.5)
+    except HTTPException:
+        raise
     except Exception as exc:
         raise HTTPException(status_code=500, detail=f"Image analysis failed: {str(exc)[:120]}")
 
