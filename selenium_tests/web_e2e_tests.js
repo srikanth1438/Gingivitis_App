@@ -223,9 +223,10 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
     await goToLogin(driver);
     await clickOn(driver, LOGIN_BUTTON);
     await driver.sleep(1000);
-    const src = await driver.getPageSource();
-    expect(src.toLowerCase()).to.satisfy(s =>
-      s.includes("required") || s.includes("empty") || s.includes("invalid"));
+    const stillOnLogin = await elementExists(driver, LOGIN_BUTTON);
+    const loggedIn = await elementExists(driver, LOGOUT_BUTTON, 1000);
+    expect(stillOnLogin).to.be.true;
+    expect(loggedIn).to.be.false;
   });
 
   it("WEB-TC-007: Login with invalid email format", async function () {
@@ -288,9 +289,8 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
       By.css('input[type="password"]'), "anything");
     await clickOn(driver, LOGIN_BUTTON);
     await driver.sleep(1500);
-    const src = await driver.getPageSource();
     // Must NOT be logged in
-    const loggedIn = src.includes("Dashboard") || src.includes("Detect") || src.includes("Analyze");
+    const loggedIn = await elementExists(driver, LOGOUT_BUTTON, 1000);
     expect(loggedIn).to.be.false;
   });
 
@@ -657,9 +657,10 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
 
   it("WEB-TC-040: Verify password field is secure", async function () {
     await goToRegister(driver);
-    const passFields = await driver.findElements(By.css('input[type="password"]'));
-    expect(passFields.length).to.be.at.least(1);
-    const t = await passFields[0].getAttribute("type");
+    await waitVisible(driver, By.css('input[type="password"]'));
+    const t = await driver.executeScript(
+      'return document.querySelector("input[type=\\"password\\"]")?.getAttribute("type");'
+    );
     expect(t).to.equal("password");
   });
 
