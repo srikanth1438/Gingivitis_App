@@ -96,7 +96,11 @@ export default function RegisterScreen({ navigation }: any) {
                 </TouchableOpacity>
             )}
 
-            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <TouchableOpacity
+                onPress={() => navigation.navigate('Login')}
+                accessibilityLabel="go-login-link"
+                id="go-login-link"
+            >
                 <Text style={styles.linkText}>Already have an account? Login</Text>
             </TouchableOpacity>
         </View>

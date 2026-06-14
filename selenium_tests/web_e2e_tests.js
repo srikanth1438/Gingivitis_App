@@ -37,6 +37,14 @@ const VALID_PASS = process.env.E2E_VALID_PASS || "password123";
 const WRONG_PASS = "WrongPass999";
 const WEAK_PASS = "123";
 const INVALID_EMAIL = "notanemail";
+const LOGIN_BUTTON = By.css('#login-button, [aria-label="login-button"], [data-testid="login-button"]');
+const REGISTER_BUTTON = By.css('#register-button, [aria-label="register-button"], [data-testid="register-button"]');
+const SEND_OTP_BUTTON = By.css('#send-otp-button, [aria-label="forgot-send-otp-button"], [data-testid="forgot-send-otp-button"]');
+const RESET_BUTTON = By.css('#reset-button, [aria-label="reset-button"], [data-testid="reset-button"]');
+const LOGOUT_BUTTON = By.css('#logout-button, [aria-label="logout-button"], [data-testid="logout-button"]');
+const REGISTER_LINK = By.css('#go-register-link, [aria-label="go-register-link"]');
+const FORGOT_PASSWORD_LINK = By.css('#go-forgot-password-link, [aria-label="go-forgot-password-link"]');
+const LOGIN_LINK = By.css('#go-login-link, [aria-label="go-login-link"]');
 
 // ─────────────────────────────────────────
 // DRIVER FACTORY
@@ -96,8 +104,13 @@ async function typeInto(driver, locator, text) {
 }
 
 async function clickOn(driver, locator) {
-  const el = await waitVisible(driver, locator);
-  await el.click();
+  let el = await waitVisible(driver, locator);
+  try {
+    await el.click();
+  } catch {
+    el = await waitVisible(driver, locator);
+    await driver.executeScript("arguments[0].click();", el);
+  }
   return el;
 }
 
@@ -122,9 +135,7 @@ async function goToLogin(driver) {
 
 async function goToRegister(driver) {
   await goToLogin(driver);
-  const link = await waitFor(driver,
-    By.xpath('//*[contains(text(),"Register") or contains(text(),"Sign Up") or contains(text(),"Create")]'));
-  await link.click();
+  await clickOn(driver, REGISTER_LINK);
   await driver.sleep(500);
 }
 
@@ -132,7 +143,7 @@ async function loginAs(driver, user = VALID_USER, pass = VALID_PASS) {
   await goToLogin(driver);
   await typeInto(driver, By.css('input[placeholder*="sername"], input[placeholder*="user"], input[name="username"]'), user);
   await typeInto(driver, By.css('input[type="password"], input[placeholder*="assword"]'), pass);
-  await clickOn(driver, By.xpath('//button[contains(text(),"Login") or contains(text(),"Sign In")]'));
+  await clickOn(driver, LOGIN_BUTTON);
   await driver.sleep(1500);
 }
 
@@ -189,7 +200,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
     const passField = await waitFor(driver,
       By.css('input[type="password"]'));
     await passField.sendKeys(VALID_PASS);
-    await clickOn(driver, By.xpath('//button[contains(text(),"Login") or contains(text(),"Sign In")]'));
+    await clickOn(driver, LOGIN_BUTTON);
     await driver.sleep(1000);
     const src = await driver.getPageSource();
     const hasError = src.includes("required") || src.includes("empty") ||
@@ -201,7 +212,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
     await goToLogin(driver);
     await typeInto(driver,
       By.css('input[placeholder*="sername"], input[name="username"]'), VALID_USER);
-    await clickOn(driver, By.xpath('//button[contains(text(),"Login") or contains(text(),"Sign In")]'));
+    await clickOn(driver, LOGIN_BUTTON);
     await driver.sleep(1000);
     const src = await driver.getPageSource();
     expect(src.toLowerCase()).to.satisfy(s =>
@@ -210,7 +221,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
 
   it("WEB-TC-006: Login with both fields empty", async function () {
     await goToLogin(driver);
-    await clickOn(driver, By.xpath('//button[contains(text(),"Login") or contains(text(),"Sign In")]'));
+    await clickOn(driver, LOGIN_BUTTON);
     await driver.sleep(1000);
     const src = await driver.getPageSource();
     expect(src.toLowerCase()).to.satisfy(s =>
@@ -223,7 +234,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
       By.css('input[placeholder*="sername"], input[name="username"]'), INVALID_EMAIL);
     await typeInto(driver,
       By.css('input[type="password"]'), VALID_PASS);
-    await clickOn(driver, By.xpath('//button[contains(text(),"Login") or contains(text(),"Sign In")]'));
+    await clickOn(driver, LOGIN_BUTTON);
     await driver.sleep(1000);
     const src = await driver.getPageSource();
     // Should either show error OR just reject login — not crash
@@ -236,7 +247,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
       By.css('input[placeholder*="sername"], input[name="username"]'), "noexistuser999");
     await typeInto(driver,
       By.css('input[type="password"]'), VALID_PASS);
-    await clickOn(driver, By.xpath('//button[contains(text(),"Login") or contains(text(),"Sign In")]'));
+    await clickOn(driver, LOGIN_BUTTON);
     await driver.sleep(1500);
     const src = await driver.getPageSource();
     expect(src.toLowerCase()).to.satisfy(s =>
@@ -249,7 +260,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
       By.css('input[placeholder*="sername"], input[name="username"]'), VALID_USER);
     await typeInto(driver,
       By.css('input[type="password"]'), WRONG_PASS);
-    await clickOn(driver, By.xpath('//button[contains(text(),"Login") or contains(text(),"Sign In")]'));
+    await clickOn(driver, LOGIN_BUTTON);
     await driver.sleep(1500);
     const src = await driver.getPageSource();
     expect(src.toLowerCase()).to.satisfy(s =>
@@ -262,7 +273,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
       By.css('input[placeholder*="sername"], input[name="username"]'), "a".repeat(200));
     await typeInto(driver,
       By.css('input[type="password"]'), VALID_PASS);
-    await clickOn(driver, By.xpath('//button[contains(text(),"Login") or contains(text(),"Sign In")]'));
+    await clickOn(driver, LOGIN_BUTTON);
     await driver.sleep(1500);
     // App should not crash — any response is OK
     const src = await driver.getPageSource();
@@ -275,7 +286,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
       By.css('input[placeholder*="sername"], input[name="username"]'), "' OR '1'='1");
     await typeInto(driver,
       By.css('input[type="password"]'), "anything");
-    await clickOn(driver, By.xpath('//button[contains(text(),"Login") or contains(text(),"Sign In")]'));
+    await clickOn(driver, LOGIN_BUTTON);
     await driver.sleep(1500);
     const src = await driver.getPageSource();
     // Must NOT be logged in
@@ -289,7 +300,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
       By.css('input[placeholder*="sername"], input[name="username"]'), "<script>alert(1)</script>");
     await typeInto(driver,
       By.css('input[type="password"]'), VALID_PASS);
-    await clickOn(driver, By.xpath('//button[contains(text(),"Login") or contains(text(),"Sign In")]'));
+    await clickOn(driver, LOGIN_BUTTON);
     await driver.sleep(1000);
     // No alert should fire — if it does, test will hang and timeout
     const src = await driver.getPageSource();
@@ -302,7 +313,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
       By.css('input[placeholder*="sername"], input[name="username"]'), "!@#$%^&*()");
     await typeInto(driver,
       By.css('input[type="password"]'), VALID_PASS);
-    await clickOn(driver, By.xpath('//button[contains(text(),"Login") or contains(text(),"Sign In")]'));
+    await clickOn(driver, LOGIN_BUTTON);
     await driver.sleep(1000);
     const src = await driver.getPageSource();
     expect(src).to.be.a("string").and.not.be.empty;
@@ -318,7 +329,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
       const passField = await waitFor(driver, By.css('input[type="password"]'));
       await passField.clear();
       await passField.sendKeys("wrongpass");
-      await clickOn(driver, By.xpath('//button[contains(text(),"Login") or contains(text(),"Sign In")]'));
+      await clickOn(driver, LOGIN_BUTTON);
       await driver.sleep(500);
     }
     const src = await driver.getPageSource();
@@ -343,16 +354,14 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
 
   it("WEB-TC-017: Login button is enabled", async function () {
     await goToLogin(driver);
-    const btn = await waitFor(driver,
-      By.xpath('//button[contains(text(),"Login") or contains(text(),"Sign In")]'));
+    const btn = await waitFor(driver, LOGIN_BUTTON);
     const isEnabled = await btn.isEnabled();
     expect(isEnabled).to.be.true;
   });
 
   it("WEB-TC-018: Navigate to register from login", async function () {
     await goToLogin(driver);
-    await clickOn(driver,
-      By.xpath('//*[contains(text(),"Register") or contains(text(),"Sign Up") or contains(text(),"Create")]'));
+    await clickOn(driver, REGISTER_LINK);
     await driver.sleep(1000);
     const src = await driver.getPageSource();
     expect(src.toLowerCase()).to.satisfy(s =>
@@ -361,8 +370,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
 
   it("WEB-TC-019: Navigate to forgot password", async function () {
     await goToLogin(driver);
-    await clickOn(driver,
-      By.xpath('//*[contains(text(),"Forgot") or contains(text(),"forgot") or contains(text(),"Reset")]'));
+    await clickOn(driver, FORGOT_PASSWORD_LINK);
     await driver.sleep(1000);
     const src = await driver.getPageSource();
     expect(src.toLowerCase()).to.satisfy(s =>
@@ -409,8 +417,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
         By.css('input[type="email"], input[placeholder*="mail"]'), `webuser${ts}@test.com`);
       await typeInto(driver,
         By.css('input[type="password"]'), VALID_PASS);
-      await clickOn(driver,
-        By.xpath('//button[contains(text(),"Register") or contains(text(),"Sign Up") or contains(text(),"Send OTP")]'));
+      await clickOn(driver, REGISTER_BUTTON);
       await driver.sleep(2000);
       const src = await driver.getPageSource();
       expect(src).to.be.a("string").and.not.be.empty;
@@ -427,8 +434,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
         By.css('input[type="email"], input[placeholder*="mail"]'), "empty@test.com");
       await typeInto(driver,
         By.css('input[type="password"]'), VALID_PASS);
-      await clickOn(driver,
-        By.xpath('//button[contains(text(),"Register") or contains(text(),"Sign Up") or contains(text(),"Send")]'));
+      await clickOn(driver, REGISTER_BUTTON);
       await driver.sleep(1000);
       const src = await driver.getPageSource();
       expect(src).to.be.a("string").and.not.be.empty;
@@ -442,8 +448,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
         By.css('input[placeholder*="sername"], input[name="username"]'), "noemailuser");
       await typeInto(driver,
         By.css('input[type="password"]'), VALID_PASS);
-      await clickOn(driver,
-        By.xpath('//button[contains(text(),"Register") or contains(text(),"Sign Up") or contains(text(),"Send")]'));
+      await clickOn(driver, REGISTER_BUTTON);
       await driver.sleep(1000);
       const src = await driver.getPageSource();
       expect(src).to.be.a("string").and.not.be.empty;
@@ -457,8 +462,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
         By.css('input[placeholder*="sername"], input[name="username"]'), "nopassuser");
       await typeInto(driver,
         By.css('input[type="email"], input[placeholder*="mail"]'), "nopass@test.com");
-      await clickOn(driver,
-        By.xpath('//button[contains(text(),"Register") or contains(text(),"Sign Up") or contains(text(),"Send")]'));
+      await clickOn(driver, REGISTER_BUTTON);
       await driver.sleep(1000);
       const src = await driver.getPageSource();
       expect(src.toLowerCase()).to.satisfy(s =>
@@ -478,8 +482,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
         await emailFields[0].sendKeys(INVALID_EMAIL);
       }
       await typeInto(driver, By.css('input[type="password"]'), VALID_PASS);
-      await clickOn(driver,
-        By.xpath('//button[contains(text(),"Register") or contains(text(),"Sign Up") or contains(text(),"Send")]'));
+      await clickOn(driver, REGISTER_BUTTON);
       await driver.sleep(1000);
       const src = await driver.getPageSource();
       expect(src).to.be.a("string").and.not.be.empty;
@@ -494,8 +497,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
       await typeInto(driver,
         By.css('input[type="email"], input[placeholder*="mail"]'), "weak@test.com");
       await typeInto(driver, By.css('input[type="password"]'), WEAK_PASS);
-      await clickOn(driver,
-        By.xpath('//button[contains(text(),"Register") or contains(text(),"Sign Up") or contains(text(),"Send")]'));
+      await clickOn(driver, REGISTER_BUTTON);
       await driver.sleep(1000);
       const src = await driver.getPageSource();
       expect(src.toLowerCase()).to.satisfy(s =>
@@ -511,8 +513,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
       await typeInto(driver,
         By.css('input[type="email"], input[placeholder*="mail"]'), "longname@test.com");
       await typeInto(driver, By.css('input[type="password"]'), VALID_PASS);
-      await clickOn(driver,
-        By.xpath('//button[contains(text(),"Register") or contains(text(),"Send")]'));
+      await clickOn(driver, REGISTER_BUTTON);
       await driver.sleep(1000);
       const src = await driver.getPageSource();
       expect(src).to.be.a("string").and.not.be.empty;
@@ -527,8 +528,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
       await typeInto(driver,
         By.css('input[type="email"], input[placeholder*="mail"]'), "xss@test.com");
       await typeInto(driver, By.css('input[type="password"]'), VALID_PASS);
-      await clickOn(driver,
-        By.xpath('//button[contains(text(),"Register") or contains(text(),"Send")]'));
+      await clickOn(driver, REGISTER_BUTTON);
       await driver.sleep(1000);
       const src = await driver.getPageSource();
       expect(src).to.not.include("<script>alert");
@@ -543,8 +543,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
       await typeInto(driver,
         By.css('input[type="email"], input[placeholder*="mail"]'), VALID_EMAIL);
       await typeInto(driver, By.css('input[type="password"]'), VALID_PASS);
-      await clickOn(driver,
-        By.xpath('//button[contains(text(),"Register") or contains(text(),"Send")]'));
+      await clickOn(driver, REGISTER_BUTTON);
       await driver.sleep(2000);
       const src = await driver.getPageSource();
       expect(src.toLowerCase()).to.satisfy(s =>
@@ -565,8 +564,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
         await emailField[0].sendKeys("spec!@#@test.com");
       }
       await typeInto(driver, By.css('input[type="password"]'), VALID_PASS);
-      await clickOn(driver,
-        By.xpath('//button[contains(text(),"Register") or contains(text(),"Send")]'));
+      await clickOn(driver, REGISTER_BUTTON);
       await driver.sleep(1000);
       const src = await driver.getPageSource();
       expect(src).to.be.a("string").and.not.be.empty;
@@ -575,16 +573,14 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
 
   it("WEB-TC-033: Register button disabled during submission", async function () {
     await goToRegister(driver);
-    const btn = await waitFor(driver,
-      By.xpath('//button[contains(text(),"Register") or contains(text(),"Sign Up") or contains(text(),"Send")]'));
+    const btn = await waitFor(driver, REGISTER_BUTTON);
     const isEnabled = await btn.isEnabled();
     expect(isEnabled).to.be.true; // Must be enabled before submission
   });
 
   it("WEB-TC-034: Navigate back to login from register", async function () {
     await goToRegister(driver);
-    await clickOn(driver,
-      By.xpath('//*[contains(text(),"Login") or contains(text(),"Sign In") or contains(text(),"Back")]'));
+    await clickOn(driver, LOGIN_LINK);
     await driver.sleep(1000);
     const src = await driver.getPageSource();
     expect(src.toLowerCase()).to.satisfy(s =>
@@ -606,8 +602,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
       await typeInto(driver,
         By.css('input[type="email"], input[placeholder*="mail"]'), "unicode@test.com");
       await typeInto(driver, By.css('input[type="password"]'), VALID_PASS);
-      await clickOn(driver,
-        By.xpath('//button[contains(text(),"Register") or contains(text(),"Send")]'));
+      await clickOn(driver, REGISTER_BUTTON);
       await driver.sleep(1000);
       const src = await driver.getPageSource();
       expect(src).to.be.a("string").and.not.be.empty;
@@ -622,8 +617,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
       await typeInto(driver,
         By.css('input[type="email"], input[placeholder*="mail"]'), "sqlinject@test.com");
       await typeInto(driver, By.css('input[type="password"]'), VALID_PASS);
-      await clickOn(driver,
-        By.xpath('//button[contains(text(),"Register") or contains(text(),"Send")]'));
+      await clickOn(driver, REGISTER_BUTTON);
       await driver.sleep(1000);
       const src = await driver.getPageSource();
       // Must not show SQL error
@@ -640,8 +634,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
       await typeInto(driver,
         By.css('input[type="email"], input[placeholder*="mail"]'), "space@test.com");
       await typeInto(driver, By.css('input[type="password"]'), "Pass Word 123");
-      await clickOn(driver,
-        By.xpath('//button[contains(text(),"Register") or contains(text(),"Send")]'));
+      await clickOn(driver, REGISTER_BUTTON);
       await driver.sleep(1000);
       const src = await driver.getPageSource();
       expect(src).to.be.a("string").and.not.be.empty;
@@ -863,8 +856,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
     // FIX: fresh driver.get + switchTo().defaultContent()
     await goToLogin(driver);
     await driver.switchTo().defaultContent();
-    await clickOn(driver,
-      By.xpath('//*[contains(text(),"Forgot") or contains(text(),"forgot") or contains(text(),"Reset")]'));
+    await clickOn(driver, FORGOT_PASSWORD_LINK);
     await driver.sleep(1000);
     const src = await driver.getPageSource();
     expect(src.toLowerCase()).to.satisfy(s =>
@@ -873,14 +865,12 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
 
   it("WEB-TC-062: Send OTP for password reset", async function () {
     await goToLogin(driver);
-    await clickOn(driver,
-      By.xpath('//*[contains(text(),"Forgot") or contains(text(),"Reset")]'));
+    await clickOn(driver, FORGOT_PASSWORD_LINK);
     await driver.sleep(500);
     await typeInto(driver,
       By.css('input[type="email"], input[placeholder*="mail"], input[placeholder*="Email"]'),
       VALID_EMAIL);
-    await clickOn(driver,
-      By.xpath('//button[contains(text(),"Send") or contains(text(),"OTP") or contains(text(),"Reset")]'));
+    await clickOn(driver, SEND_OTP_BUTTON);
     await driver.sleep(1500);
     const src = await driver.getPageSource();
     expect(src).to.be.a("string").and.not.be.empty;
@@ -888,15 +878,13 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
 
   it("WEB-TC-063: Invalid email format on forgot", async function () {
     await goToLogin(driver);
-    await clickOn(driver,
-      By.xpath('//*[contains(text(),"Forgot") or contains(text(),"Reset")]'));
+    await clickOn(driver, FORGOT_PASSWORD_LINK);
     await driver.sleep(500);
     try {
       const emailField = await waitFor(driver,
         By.css('input[type="email"], input[placeholder*="mail"], input[placeholder*="Email"]'), 5000);
       await emailField.sendKeys(INVALID_EMAIL);
-      await clickOn(driver,
-        By.xpath('//button[contains(text(),"Send") or contains(text(),"OTP") or contains(text(),"Reset")]'));
+      await clickOn(driver, SEND_OTP_BUTTON);
       await driver.sleep(1000);
       const src = await driver.getPageSource();
       expect(src.toLowerCase()).to.satisfy(s =>
@@ -906,12 +894,10 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
 
   it("WEB-TC-064: Send OTP with empty email field", async function () {
     await goToLogin(driver);
-    await clickOn(driver,
-      By.xpath('//*[contains(text(),"Forgot") or contains(text(),"Reset")]'));
+    await clickOn(driver, FORGOT_PASSWORD_LINK);
     await driver.sleep(500);
     try {
-      await clickOn(driver,
-        By.xpath('//button[contains(text(),"Send") or contains(text(),"OTP") or contains(text(),"Reset")]'));
+      await clickOn(driver, SEND_OTP_BUTTON);
       await driver.sleep(1000);
       const src = await driver.getPageSource();
       expect(src.toLowerCase()).to.satisfy(s =>
@@ -921,15 +907,13 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
 
   it("WEB-TC-065: Forgot password email field input sanitization", async function () {
     await goToLogin(driver);
-    await clickOn(driver,
-      By.xpath('//*[contains(text(),"Forgot") or contains(text(),"Reset")]'));
+    await clickOn(driver, FORGOT_PASSWORD_LINK);
     await driver.sleep(500);
     try {
       const emailField = await waitFor(driver,
         By.css('input[type="email"], input[placeholder*="mail"]'), 5000);
       await emailField.sendKeys("' OR 1=1 --");
-      await clickOn(driver,
-        By.xpath('//button[contains(text(),"Send") or contains(text(),"OTP") or contains(text(),"Reset")]'));
+      await clickOn(driver, SEND_OTP_BUTTON);
       await driver.sleep(1000);
       const src = await driver.getPageSource();
       expect(src.toLowerCase()).to.not.include("sqlite");
@@ -940,8 +924,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
     // FIX: use switchTo().defaultContent() after navigation
     await goToLogin(driver);
     await driver.switchTo().defaultContent();
-    await clickOn(driver,
-      By.xpath('//*[contains(text(),"Forgot") or contains(text(),"Reset")]'));
+    await clickOn(driver, FORGOT_PASSWORD_LINK);
     await driver.sleep(1000);
     await driver.switchTo().defaultContent(); // KEY FIX
     const src = await driver.getPageSource();
@@ -950,12 +933,10 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
 
   it("WEB-TC-067: Forgot password verify button state changes on click", async function () {
     await goToLogin(driver);
-    await clickOn(driver,
-      By.xpath('//*[contains(text(),"Forgot") or contains(text(),"Reset")]'));
+    await clickOn(driver, FORGOT_PASSWORD_LINK);
     await driver.sleep(500);
     try {
-      const btn = await waitFor(driver,
-        By.xpath('//button[contains(text(),"Send") or contains(text(),"OTP") or contains(text(),"Reset")]'), 5000);
+      const btn = await waitFor(driver, SEND_OTP_BUTTON, 5000);
       const isEnabled = await btn.isEnabled();
       expect(isEnabled).to.be.true;
     } catch { expect(true).to.be.true; }
@@ -963,8 +944,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
 
   it("WEB-TC-068: Reset password screen elements are displayed", async function () {
     await goToLogin(driver);
-    await clickOn(driver,
-      By.xpath('//*[contains(text(),"Forgot") or contains(text(),"Reset")]'));
+    await clickOn(driver, FORGOT_PASSWORD_LINK);
     await driver.sleep(1000);
     const src = await driver.getPageSource();
     expect(src).to.be.a("string").and.not.be.empty;
@@ -972,19 +952,16 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
 
   it("WEB-TC-069: Reset password with empty OTP field", async function () {
     await goToLogin(driver);
-    await clickOn(driver,
-      By.xpath('//*[contains(text(),"Forgot") or contains(text(),"Reset")]'));
+    await clickOn(driver, FORGOT_PASSWORD_LINK);
     await driver.sleep(500);
     try {
       const emailField = await waitFor(driver,
         By.css('input[type="email"], input[placeholder*="mail"]'), 5000);
       await emailField.sendKeys(VALID_EMAIL);
-      await clickOn(driver,
-        By.xpath('//button[contains(text(),"Send") or contains(text(),"OTP")]'));
+      await clickOn(driver, SEND_OTP_BUTTON);
       await driver.sleep(2000);
       // Try to submit reset without OTP
-      const resetBtn = await driver.findElements(
-        By.xpath('//button[contains(text(),"Reset") or contains(text(),"Confirm")]'));
+      const resetBtn = await driver.findElements(RESET_BUTTON);
       if (resetBtn.length > 0) await resetBtn[0].click();
       await driver.sleep(1000);
     } catch { }
@@ -1031,8 +1008,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
 
   it("WEB-TC-077: Reset password fields masked correctly", async function () {
     await goToLogin(driver);
-    await clickOn(driver,
-      By.xpath('//*[contains(text(),"Forgot") or contains(text(),"Reset")]'));
+    await clickOn(driver, FORGOT_PASSWORD_LINK);
     await driver.sleep(500);
     const passFields = await driver.findElements(By.css('input[type="password"]'));
     if (passFields.length > 0) {
@@ -1045,12 +1021,10 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
 
   it("WEB-TC-078: Reset password back to login link navigation", async function () {
     await goToLogin(driver);
-    await clickOn(driver,
-      By.xpath('//*[contains(text(),"Forgot") or contains(text(),"Reset")]'));
+    await clickOn(driver, FORGOT_PASSWORD_LINK);
     await driver.sleep(500);
     try {
-      await clickOn(driver,
-        By.xpath('//*[contains(text(),"Back") or contains(text(),"Login") or contains(text(),"Cancel")]'));
+      await clickOn(driver, LOGIN_LINK);
       await driver.sleep(1000);
       const src = await driver.getPageSource();
       expect(src.toLowerCase()).to.satisfy(s =>
@@ -1137,8 +1111,10 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
     await loginAs(driver);
     await driver.switchTo().defaultContent();
     try {
-      await clickOn(driver,
-        By.xpath('//*[contains(text(),"Logout") or contains(text(),"Log Out") or contains(text(),"Sign Out")]'));
+      await clickOn(driver, LOGOUT_BUTTON);
+      try {
+        await driver.switchTo().alert().accept();
+      } catch { }
       await driver.sleep(1500);
       const src = await driver.getPageSource();
       expect(src.toLowerCase()).to.satisfy(s =>
@@ -1179,8 +1155,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
     await goToLogin(driver);
     await driver.switchTo().defaultContent();
     try {
-      await clickOn(driver,
-        By.xpath('//*[contains(text(),"Register") or contains(text(),"Sign Up") or contains(text(),"Create")]'));
+      await clickOn(driver, REGISTER_LINK);
       await driver.sleep(800);
       await driver.switchTo().defaultContent();
       const src = await driver.getPageSource();
@@ -1193,8 +1168,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
     await goToRegister(driver);
     await driver.switchTo().defaultContent();
     try {
-      await clickOn(driver,
-        By.xpath('//*[contains(text(),"Login") or contains(text(),"Sign In") or contains(text(),"Back")]'));
+      await clickOn(driver, LOGIN_LINK);
       await driver.sleep(800);
       await driver.switchTo().defaultContent();
       const src = await driver.getPageSource();
@@ -1236,8 +1210,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
     await goToLogin(driver);
     await driver.switchTo().defaultContent();
     try {
-      await clickOn(driver,
-        By.xpath('//*[contains(text(),"Register") or contains(text(),"Sign Up")]'));
+      await clickOn(driver, REGISTER_LINK);
       await driver.sleep(500);
       await driver.navigate().back();
       await driver.sleep(500);
@@ -1252,8 +1225,7 @@ describe("🦷 Gingivitis Detector - Web E2E Test Suite (100 Tests)", function (
     await goToLogin(driver);
     await driver.switchTo().defaultContent();
     try {
-      await clickOn(driver,
-        By.xpath('//*[contains(text(),"Register") or contains(text(),"Sign Up")]'));
+      await clickOn(driver, REGISTER_LINK);
       await driver.sleep(500);
       await driver.navigate().back();
       await driver.sleep(300);

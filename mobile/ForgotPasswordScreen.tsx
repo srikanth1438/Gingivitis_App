@@ -75,7 +75,11 @@ export default function ForgotPasswordScreen({ navigation }: any) {
                 </TouchableOpacity>
             )}
 
-            <TouchableOpacity onPress={() => navigation.replace('Login')}>
+            <TouchableOpacity
+                onPress={() => navigation.replace('Login')}
+                accessibilityLabel="go-login-link"
+                id="go-login-link"
+            >
                 <Text style={styles.linkText}>← Back to Login</Text>
             </TouchableOpacity>
         </View>

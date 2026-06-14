@@ -84,11 +84,19 @@ export default function LoginScreen({ navigation }: any) {
                 </TouchableOpacity>
             )}
 
-            <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
+            <TouchableOpacity
+                onPress={() => navigation.navigate('ForgotPassword')}
+                accessibilityLabel="go-forgot-password-link"
+                id="go-forgot-password-link"
+            >
                 <Text style={styles.forgotText}>Forgot Password?</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+            <TouchableOpacity
+                onPress={() => navigation.navigate('Register')}
+                accessibilityLabel="go-register-link"
+                id="go-register-link"
+            >
                 <Text style={styles.linkText}>Don't have an account? Register</Text>
             </TouchableOpacity>
         </View>
