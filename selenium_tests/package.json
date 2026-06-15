@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Selenium Web E2E Tests - Gingivitis Detection App",
   "scripts": {
+    "login": "mocha web_e2e_tests.js --grep \"WEB-TC-003\" --timeout 60000 --reporter spec",
     "test": "mocha web_e2e_tests.js --timeout 60000 --reporter spec",
     "test:html": "mocha web_e2e_tests.js --timeout 30000 --reporter mochawesome --reporter-options reportDir=../reports,reportFilename=Web_E2E_Report"
   },

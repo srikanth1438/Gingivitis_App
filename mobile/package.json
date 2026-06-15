@@ -10,7 +10,8 @@
     "web": "expo start --web",
     "build": "expo export -p web",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist --dotfiles"
+    "deploy": "gh-pages -d dist --dotfiles",
+    "login": "npm --prefix ../selenium_tests run login"
 },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
